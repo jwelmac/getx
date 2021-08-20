@@ -182,6 +182,13 @@ void main() {
       expect((instance as Controller).init, greaterThan(0));
     });
 
+    test('service', () async {
+      Get.put(PermanentService());
+      Get.replace<PermanentService>(ReplacementService());
+      final instance = Get.find<PermanentService>();
+      expect(instance is ReplacementService, isTrue);
+    });
+
     test('permanent', () async {
       Get.put(DisposableController(), permanent: true);
       Get.replace<DisposableController>(Controller());
@@ -254,6 +261,8 @@ void main() {
 }
 
 class PermanentService extends GetxService {}
+
+class ReplacementService extends PermanentService {}
 
 class Controller extends DisposableController {
   int init = 0;

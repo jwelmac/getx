@@ -1,3 +1,5 @@
+import 'package:get/get.dart';
+
 import '../../get_core/src/get_interface.dart';
 import '../../route_manager.dart';
 import 'get_instance.dart';
@@ -139,7 +141,8 @@ extension Inst on GetInterface {
   /// - [tag] optional, if you use a [tag] to register the Instance.
   void replace<P>(P child, {String? tag}) {
     final info = GetInstance().getInstanceInfo<P>(tag: tag);
-    final permanent = (info.isPermanent ?? false);
+    var isService = child is GetxService;
+    final permanent = isService || (info.isPermanent ?? false);
     delete<P>(tag: tag, force: permanent);
     put(child, tag: tag, permanent: permanent);
   }
